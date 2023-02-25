@@ -1,7 +1,7 @@
 const fb = require('express').Router();
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
-
+const termData = require('../db/db.json');
 
 
 
@@ -23,7 +23,7 @@ fb.post('/', (req, res) => {
     const newNote = {
       title,
       text,
-      note_id: uuid(),
+      id: uuid(),
     };
 
     readAndAppend(newNote, './db/db.json');
@@ -33,15 +33,32 @@ fb.post('/', (req, res) => {
   }
 });
 
-fb.get('/:note_id', (req, res) => {
+
+// Delete a note
+fb.delete(`/`, (req, res) => {
+  // Coerce the specific search term to lowercase
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
 
-  const { note_id } = req.body;
+  // Iterate through the terms name to check if it matches `req.params.term`
+  for (let i = 0; i < termData.length; i++) {
+    if (requestedTerm === termData[i].id) {
+      return res.json(termData[i]);
+    }
+  }
+
+  // Return a message if the term doesn't exist in our DB
+  return res.json('No match found');
+});
+/*fb.get('/:id', (req, res) => {
+  console.info(`${req.method} request received to add a tip`);
+  console.log(req.body);
+
+  const { id } = req.body;
 
   if (req.body) {
     const editNote = {
-      note_id
+      id
     };
 
     readFromFile(editNote, './db/db.json');

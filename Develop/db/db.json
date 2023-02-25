@@ -1,20 +1,22 @@
 [
     {
         "title": "Test Title",
-        "text": "Test text"
+        "text": "Test text",
+        "id": "5d9f"
     },
     {
         "title": "Another Test Title",
-        "text": "Another Test text"
+        "text": "Another Test text",
+        "id": "8d1f"
     },
     {
         "title": "More Test Title",
         "text": "More Test text",
-        "note_id": "5d1f"
+        "id": "5d1f"
     },
     {
         "title": "First test in browser",
         "text": "This is the first time testing notes in the browser\n",
-        "note_id": "9140"
+        "id": "9140"
     }
 ]
