@@ -33,7 +33,7 @@ fb.post('/', (req, res) => {
   }
 });
 
-fb.put('/:note_id', (req, res) => {
+fb.get('/:note_id', (req, res) => {
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
 
