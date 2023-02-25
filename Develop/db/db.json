@@ -11,5 +11,10 @@
         "title": "More Test Title",
         "text": "More Test text",
         "note_id": "5d1f"
+    },
+    {
+        "title": "First test in browser",
+        "text": "This is the first time testing notes in the browser\n",
+        "note_id": "9140"
     }
 ]
