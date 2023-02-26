@@ -73,7 +73,7 @@ fb.delete(`/`, (req, res) => {
 })*/
   module.exports = fb;
 
-
+//CODE I AM JUST PLAYING WITH
   fb.delete('/', (req, res) => {
     console.info(`${req.method} request received to add a tip`);
     console.log(req.body);
@@ -94,18 +94,21 @@ fb.delete(`/`, (req, res) => {
     }
   });
 
-  fb.delete(`/`, (req, res) => {
+  fb.delete(`/api/notes/:id`, (req, res) => {
     // Coerce the specific search term to lowercase
     console.info(`${req.method} request received to add a tip`);
     console.log(req.body);
   
+    const noteId = req.params.id
     // Iterate through the terms name to check if it matches `req.params.term`
     for (let i = 0; i < termData.length; i++) {
-      if (requestedTerm === termData[i].id) {
-        return res.json(termData[i]);
+      if (noteId === termData[i].id) {
+        writeToFile(noteId, './db/db.json');
       }
     }
   
     // Return a message if the term doesn't exist in our DB
     return res.json('No match found');
   });
+
+  writeToFile(delNote, './db/db.json');
