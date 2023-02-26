@@ -7,6 +7,7 @@ const termData = require('../db/db.json');
 
 // GET Route for retrieving all the feedback
 fb.get('/', (req, res) => {
+  console.log(`in get request`);
     console.info(`${req.method} request received for feedback`);
   
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
@@ -35,45 +36,29 @@ fb.post('/', (req, res) => {
 
 
 // Delete a note
-fb.delete(`/`, (req, res) => {
+fb.delete(`/api/notes/:id`, (req, res) => {
+  console.log(req);
   // Coerce the specific search term to lowercase
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
-
+  const noteId = req.params.id
+  console.log(noteId);
   // Iterate through the terms name to check if it matches `req.params.term`
   for (let i = 0; i < termData.length; i++) {
-    if (requestedTerm === termData[i].id) {
-      return res.json(termData[i]);
+    if (noteId !== termData[i].id) {
+      const newdata = termData.filter(cat,i)
+      console.log(newdata);
+      writeToFile(newdata, './db/db.json');
     }
   }
-
   // Return a message if the term doesn't exist in our DB
   return res.json('No match found');
 });
-/*fb.get('/:id', (req, res) => {
-  console.info(`${req.method} request received to add a tip`);
-  console.log(req.body);
 
-  const { id } = req.body;
-
-  if (req.body) {
-    const editNote = {
-      id
-    };
-
-    readFromFile(editNote, './db/db.json');
-    res.json(`Tip obtained successfully 🚀`);
-  } else {
-    res.error('Error in getting tip');
-  }
-});
-/*fb.put('/', (req, res) => {
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-  res.send('Got a PUT request at /user')
-})*/
   module.exports = fb;
 
 //CODE I AM JUST PLAYING WITH
+/*
   fb.delete('/', (req, res) => {
     console.info(`${req.method} request received to add a tip`);
     console.log(req.body);
@@ -95,7 +80,6 @@ fb.delete(`/`, (req, res) => {
   });
 
   fb.delete(`/api/notes/:id`, (req, res) => {
-    // Coerce the specific search term to lowercase
     console.info(`${req.method} request received to add a tip`);
     console.log(req.body);
   
@@ -112,3 +96,5 @@ fb.delete(`/`, (req, res) => {
   });
 
   writeToFile(delNote, './db/db.json');
+
+*/
