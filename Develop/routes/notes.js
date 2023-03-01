@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 const termData = require('../db/db.json');
+const { json } = require('express');
 
 
 // GET Route for retrieving all the feedback
@@ -37,6 +38,7 @@ router.post('/', (req, res) => {
 // Delete a note
 router.delete(`/:id`, (req, res) => {
   console.log(termData);
+  const newTerms = readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
   // Coerce the specific search term to lowercase
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
@@ -44,7 +46,7 @@ router.delete(`/:id`, (req, res) => {
   console.log(noteId);
   // Iterate through the terms name to check if it matches `req.params.term`
   //note in filter represents a piece of the term data object
-      const newdata = termData.filter(note => note.id !== noteId)
+      const newdata = newTerms.filter(note => note.id !== noteId)
       console.log(newdata);
       writeToFile('./db/db.json',newdata);
   
