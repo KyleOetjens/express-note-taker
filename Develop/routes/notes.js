@@ -1,12 +1,11 @@
-const fb = require('express').Router();
+const router = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
 const termData = require('../db/db.json');
 
 
-
 // GET Route for retrieving all the feedback
-fb.get('/', (req, res) => {
+router.get('/', (req, res) => {
   console.log(`in get request`);
     console.info(`${req.method} request received for feedback`);
   
@@ -14,7 +13,7 @@ fb.get('/', (req, res) => {
   });
 
   // POST Route for a new UX/UI tip
-fb.post('/', (req, res) => {
+router.post('/', (req, res) => {
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
 
@@ -36,26 +35,24 @@ fb.post('/', (req, res) => {
 
 
 // Delete a note
-fb.delete(`/api/notes/:id`, (req, res) => {
-  console.log(req);
+router.delete(`/:id`, (req, res) => {
+  console.log(termData);
   // Coerce the specific search term to lowercase
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
   const noteId = req.params.id
   console.log(noteId);
   // Iterate through the terms name to check if it matches `req.params.term`
-  for (let i = 0; i < termData.length; i++) {
-    if (noteId !== termData[i].id) {
-      const newdata = termData.filter(cat,i)
+  //note in filter represents a piece of the term data object
+      const newdata = termData.filter(note => note.id !== noteId)
       console.log(newdata);
-      writeToFile(newdata, './db/db.json');
-    }
-  }
+      writeToFile('./db/db.json',newdata);
+  
   // Return a message if the term doesn't exist in our DB
-  return res.json('No match found');
+  return res.json('deleted');
 });
 
-  module.exports = fb;
+  module.exports = router;
 
 //CODE I AM JUST PLAYING WITH
 /*
