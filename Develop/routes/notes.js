@@ -38,7 +38,10 @@ router.post('/', (req, res) => {
 // Delete a note
 router.delete(`/:id`, (req, res) => {
   console.log(termData);
-  const newTerms = readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
+  const newTerms = readFromFile('./db/db.json').then((data) => {
+    parsedItem = [].concat(JSON.parse(data));
+    return newTerms;
+  })
   // Coerce the specific search term to lowercase
   console.info(`${req.method} request received to add a tip`);
   console.log(req.body);
