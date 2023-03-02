@@ -37,33 +37,29 @@ router.post('/', (req, res) => {
 
 // Delete a note
 router.delete(`/:id`, (req, res) => {
+  console.info(`${req.method} request received to ${req.method} a note`);
   console.log(termData);
+  const noteId = req.params.id
+  console.log(noteId);
   const newTerms = readFromFile('./db/db.json').then((data) => {
-    parsedItem = [].concat(JSON.parse(data));
-    return newTerms;
+   // parsedItem = [].concat(JSON.parse(data));
+   // return newTerms;
     try {
       parsedItem = [].concat(JSON.parse(data));
     } catch (err) {
       console.log(err);
       parsedItem = [];
     }
-
-    return parsedItem;
   })
-  console.info(`${req.method} request received to add a tip`);
-  console.log(req.body);
-  const noteId = req.params.id
-  console.log(noteId);
-  // Iterate through the terms name to check if it matches `req.params.term`
-  //note in filter represents a piece of the term data object
-      const newdata = newTerms.filter(note => note.id !== noteId)
-      console.log(newdata);
-      writeToFile('./db/db.json',newdata);
+  .then((data)=>{
+    data.filter(note => note.id !== noteId)})
+    .then((data)=>{
+      console.log(data);
+      writeToFile('./db/db.json',data);
+    })
+    return res.json('deleted');
+  });
   
-  // Return a message if the term doesn't exist in our DB
-  return res.json('deleted');
-});
-
   module.exports = router;
 
 //CODE I AM JUST PLAYING WITH
