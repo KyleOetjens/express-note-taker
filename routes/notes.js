@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
-const termData = require('../db/db.json');
+const termData = require('../db.json');
 const { json } = require('express');
 
 
@@ -9,7 +9,7 @@ const { json } = require('express');
 router.get('/', (req, res) => {
     console.info(`${req.method} request received for feedback`);
   
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+    readFromFile('./db.json').then((data) => res.json(JSON.parse(data)));
   });
 
   // POST Route for a new UX/UI tip
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
       id: uuid(),
     };
 
-    readAndAppend(newNote, './db/db.json');
+    readAndAppend(newNote, './db.json');
     res.json(`Tip added successfully 🚀`);
   } else {
     res.error('Error in adding tip');
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
 router.delete(`/:id`, (req, res) => {
   console.info(`${req.method} request received to ${req.method} a note`);
   const noteId = req.params.id
-  const newTerms = readFromFile('./db/db.json',`utf-8`).then((data) => {
+  const newTerms = readFromFile('./db.json',`utf-8`).then((data) => {
     try {
       parsedItem = [].concat(JSON.parse(data));
     } catch (err) {
@@ -45,7 +45,7 @@ router.delete(`/:id`, (req, res) => {
   })
   .then((data)=>{
     data = data.filter(note => note.id !== noteId)
-      writeToFile('./db/db.json',data);
+      writeToFile('./db.json',data);
     
     return res.json('deleted');
   })
