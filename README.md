@@ -22,6 +22,10 @@ none
 ## Usage
 
 click the link to view saved notes, click in to the blank notes to type a new note and save using the icon in the top right corner
+Link to app - https://rocky-plateau-49872.herokuapp.com/
+
+
+![](./Assets/Note_Taker.gif)
 ## Credits  
 
 Ask BCS LA's/ Meg Meyers (tutor)
